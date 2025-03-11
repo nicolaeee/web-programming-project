@@ -1,11 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ByteLibrary - Librăria Modernă</title>
+    <link rel="stylesheet" href="css/starter-page.css">
 </head>
 <body>
-    <h1>H11s</h1>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">📚 ByteLibrary</div>
+        <button class="login-btn">Log In</button>
+    </header>
+
+    <!-- Secțiunea 1: Slider cu cărți -->
+    <section class="books">
+        <h2>Cărți Disponibile</h2>
+        <div class="slider">
+            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            <div class="slider-container">
+                <div class="slide"><img src="book1.jpg" alt="Carte 1"></div>
+                <div class="slide"><img src="book2.jpg" alt="Carte 2"></div>
+                <div class="slide"><img src="book3.jpg" alt="Carte 3"></div>
+            </div>
+            <button class="next" onclick="moveSlide(1)">&#10095;</button>
+        </div>
+    </section>
+
+    <!-- Secțiunea 2: Autori Populari -->
+    <section class="authors">
+        <h2>Cei mai populari autori</h2>
+        <div class="author-list">
+            <div class="author-card">📖 Autor 1</div>
+            <div class="author-card">📖 Autor 2</div>
+            <div class="author-card">📖 Autor 3</div>
+            <div class="author-card">📖 Autor 4</div>
+        </div>
+    </section>
+
+    <!-- Secțiunea 3: Contact -->
+    <section class="contact">
+        <h2>Contact</h2>
+        <p>Email: contact@bytelibrary.com</p>
+        <p>Telefon: +40 123 456 789</p>
+        <p>Adresă: Str. Biblioteca, nr. 10, România</p>
+    </section>
+
+    <script src="js/script-slider.js"></script>
 </body>
 </html>
