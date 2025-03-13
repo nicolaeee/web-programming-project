@@ -5,10 +5,9 @@ function moveSlide(direction) {
     const slides = document.querySelectorAll(".slide");
     const totalSlides = slides.length;
 
-    currentIndex += direction;
+    // Calculează noul index
+    currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
 
-    if (currentIndex < 0) currentIndex = totalSlides - 1;
-    if (currentIndex >= totalSlides) currentIndex = 0;
-
+    // Mută sliderul
     slider.style.transform = `translateX(-${currentIndex * 100}%)`;
 }
