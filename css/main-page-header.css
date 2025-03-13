@@ -1,0 +1,52 @@
+/* Stilizare Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent */
+    backdrop-filter: blur(10px); /* Efect premium */
+    color: white;
+    z-index: 1000;
+    transition: transform 0.3s ease-out, background 0.3s;
+}
+
+/* Efect Parallax la Scroll */
+.scrolled {
+    background: rgba(0, 0, 0, 0.9); /* Devine mai opac la scroll */
+    transform: translateY(-5px);
+}
+
+/* Logo animat */
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+/* Buton Log In */
+.login-btn {
+    background: none;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-btn:hover {
+    background: white;
+    color: black;
+    transform: scale(1.1);
+}
