@@ -1,60 +1,64 @@
+/* Resetare stiluri */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     scroll-behavior: smooth;
 }
 
-/* Header */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background: #222;
-    color: white;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
+body {
+    background: #000;
+    color: #fff;
 }
 
-.logo {
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.login-btn {
-    background: #ff9800;
-    color: white;
-    border: none;
-    padding: 12px 18px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.login-btn:hover {
-    background: #e68900;
-}
-
-/* Secțiunile mari */
+/* Stilizare secțiuni */
 section {
+    position: relative;
     height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-/* Slider cu cărți */
-.books {
-    background: #f4f4f4;
     flex-direction: column;
-    padding-top: 60px;
+    justify-content: center;
+    text-align: center;
+    padding: 5vw;
+    overflow: hidden;
 }
 
+/* Fundal cu parallax */
+.books-bg, .authors-bg, .contact-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transform: translateY(0);
+    transition: transform 0.3s ease-out;
+    z-index: -1;
+}
+
+.books-bg {
+    background: url('https://source.unsplash.com/1600x900/?books') no-repeat center;
+}
+
+.authors-bg {
+    background: url('https://source.unsplash.com/1600x900/?writing') no-repeat center;
+}
+
+.contact-bg {
+    background: url('https://source.unsplash.com/1600x900/?black') no-repeat center;
+}
+
+/* Titluri mari */
+h2 {
+    font-size: 5rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: 40px;
+}
+
+/* Slider */
 .slider {
     position: relative;
     max-width: 80%;
@@ -80,7 +84,7 @@ section {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.2);
     color: white;
     border: none;
     padding: 10px;
@@ -92,34 +96,46 @@ section {
 .next { right: 10px; }
 
 .prev:hover, .next:hover {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(255, 255, 255, 0.5);
 }
 
-/* Autori populari */
-.authors {
-    background: linear-gradient(135deg, #ff9800, #ff5722);
-    color: white;
-    flex-direction: column;
-}
-
+/* Autori */
 .author-list {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 40px;
     flex-wrap: wrap;
 }
 
 .author-card {
-    padding: 20px 40px;
+    padding: 30px 50px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
-    font-size: 20px;
+    font-size: 2rem;
     transition: transform 0.3s;
 }
 
 .author-card:hover {
     transform: scale(1.1);
 }
+
+/* Contact */
+.contact-info {
+    font-size: 2rem;
+}
+
+.contact a {
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 2px solid #fff;
+    transition: 0.3s;
+}
+
+.contact a:hover {
+    color: #aaa;
+    border-bottom: 2px solid #aaa;
+}
+
 
 /* Contact */
 .contact {
