@@ -1,0 +1,116 @@
+/* ================== */
+/* Reguli generale    */
+/* ================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ================== */
+/* Header Responsive  */
+/* ================== */
+header {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 20px;
+}
+
+.logo {
+    font-size: 24px;
+}
+
+.login-btn {
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+/* ================== */
+/* Slider Responsiv   */
+/* ================== */
+.slider {
+    max-width: 100%;
+    padding: 10px;
+}
+
+.slide img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.prev, .next {
+    font-size: 18px;
+    padding: 5px;
+}
+
+/* ================== */
+/* Autori Responsivi  */
+/* ================== */
+.author-list {
+    flex-direction: column;
+    gap: 10px;
+}
+
+.author-card {
+    font-size: 18px;
+    padding: 15px;
+}
+
+/* ================== */
+/* Secțiunea Contact  */
+/* ================== */
+.contact h2 {
+    font-size: 3rem;
+}
+
+.contact-info {
+    font-size: 1.2rem;
+}
+
+/* ================== */
+/* Media Queries      */
+/* ================== */
+
+/* Pentru telefoane */
+@media screen and (max-width: 600px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .login-btn {
+        margin-top: 10px;
+    }
+
+    .slider-container {
+        flex-direction: column;
+    }
+
+    .author-list {
+        flex-direction: column;
+    }
+
+    .contact h2 {
+        font-size: 2.5rem;
+    }
+
+    .contact-info {
+        font-size: 1rem;
+    }
+}
+
+/* Pentru tablete */
+@media screen and (max-width: 900px) {
+    .slider {
+        max-width: 90%;
+    }
+
+    .author-list {
+        flex-wrap: wrap;
+    }
+
+    .contact h2 {
+        font-size: 3rem;
+    }
+}
