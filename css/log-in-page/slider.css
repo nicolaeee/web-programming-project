@@ -1,0 +1,49 @@
+/* ================== */
+/* Stilizare Slider   */
+/* ================== */
+.slider {
+    position: relative;
+    max-width: 90%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.slider-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.slide img {
+    width: 100%;
+    height: 400px; /* Fixăm înălțimea pentru a fi uniforme */
+    object-fit: cover; /* Asigură tăierea frumoasă a imaginilor */
+    border-radius: 10px;
+}
+
+/* Butoane slider */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 10;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.prev:hover, .next:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
