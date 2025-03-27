@@ -14,10 +14,30 @@
     <!-- Header -->
     <header id="header">
         <div class="logo">📚 ByteLibrary</div>
-        <button class="login-btn"><a href="modal-log-in/file.html">Log In</a></button>
+        <button id="openModalBtn" class="login-btn">Log In</button>
     </header>
 
-   <!-- Secțiunea 1: Slider cu cărți -->
+    <!-- Fereastra Modală -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Autentificare</h2>
+            <form>
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Introdu username-ul" required>
+
+                <label for="password">Parolă</label>
+                <input type="password" id="password" placeholder="Introdu parola" required>
+
+                <div class="btn-group">
+                    <button type="button" class="admin-btn">Log in as Admin</button>
+                    <button type="button" class="user-btn">Log in as User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+   <!-- Restul paginii rămâne neschimbat -->
    <section class="books" id="books">
     <div class="books-bg"></div>
     <h2>Cărți Disponibile</h2>
@@ -44,7 +64,6 @@
     </div>
 </section>
 
-
     <section class="contact" id="contact">
         <div class="contact-bg"></div>
         <div class="contact-content">
@@ -59,5 +78,8 @@
     <script src="js/log-in-page/script-books-author.js"></script>
     <script src="js/log-in-page/script-contact-section.js"></script>
     <script src="js/log-in-page/script-slider.js"></script>
+    <script src="modal-log-in/script.js"></script>
+
+
 </body>
 </html>
