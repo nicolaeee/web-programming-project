@@ -1,0 +1,81 @@
+/* sections.css */
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-large) 5%;
+    position: relative;
+    overflow: hidden;
+}
+
+section h2 {
+    margin-bottom: var(--spacing-large);
+    color: var(--primary-color);
+    text-align: center;
+}
+
+/* Books Section */
+#books {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.slider {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-medium);
+    max-width: 800px;
+    width: 100%;
+}
+
+.slider-container {
+    display: flex;
+    gap: var(--spacing-medium);
+    overflow-x: auto;
+}
+
+.slide img {
+    max-width: 250px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.slide img:hover {
+    transform: scale(1.05);
+}
+
+/* Authors Section */
+#authors {
+    background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+}
+
+.author-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-medium);
+}
+
+.author-card {
+    background-color: white;
+    padding: var(--spacing-medium);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 200px;
+}
+
+/* Contact Section */
+#contact {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-small);
+    text-align: center;
+}
