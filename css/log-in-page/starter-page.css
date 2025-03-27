@@ -1,215 +1,228 @@
-/* Resetare stiluri */
+/* Modal and Page Styling */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --light-bg: #ecf0f1;
+    --text-color: #333;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-    scroll-behavior: smooth;
 }
 
 body {
-    background: #000;
-    color: #fff;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-bg);
 }
 
-/* Stilizare secțiuni */
-section {
-    position: relative;
-    height: 100vh;
+/* Header Styling */
+#header {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 5vw;
-    overflow: hidden;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Fundal cu parallax */
-.books-bg, .authors-bg, .contact-bg {
-    position: absolute;
-    top: 0;
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.login-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
     left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
-    transform: translateY(0);
-    transition: transform 0.3s ease-out;
-    z-index: -1;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
 }
 
-.books-bg {
-    background: url('https://source.unsplash.com/1600x900/?books') no-repeat center;
-}
-
-.authors-bg {
-    background: url('https://source.unsplash.com/1600x900/?writing') no-repeat center;
-}
-
-.contact-bg {
-    background: url('https://source.unsplash.com/1600x900/?black') no-repeat center;
-}
-
-/* Titluri mari */
-h2 {
-    font-size: 5rem;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    margin-bottom: 40px;
-}
-
-/* Slider */
-.slider {
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 350px;
+    max-width: 90%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     position: relative;
-    max-width: 80%;
-    margin: auto;
-    overflow: hidden;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: var(--primary-color);
+}
+
+.modal h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal label {
+    margin-bottom: 5px;
+    color: var(--secondary-color);
+}
+
+.modal input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.admin-btn, .user-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.admin-btn {
+    background-color: var(--primary-color);
+}
+
+.user-btn {
+    background-color: var(--accent-color);
+}
+
+.admin-btn:hover {
+    background-color: #34495e;
+}
+
+.user-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Sections Styling */
+section {
+    padding: 50px 5%;
+    text-align: center;
+}
+
+section h2 {
+    margin-bottom: 30px;
+    color: var(--primary-color);
+}
+
+/* Books Slider */
+.slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
 .slider-container {
     display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.slide {
-    min-width: 100%;
+    overflow: hidden;
+    max-width: 600px;
+    gap: 20px;
 }
 
 .slide img {
-    width: 100%;
-    border-radius: 10px;
+    max-width: 200px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.prev, .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 24px;
-}
-
-.prev { left: 10px; }
-.next { right: 10px; }
-
-.prev:hover, .next:hover {
-    background: rgba(255, 255, 255, 0.5);
-}
-
-/* Autori */
+/* Authors Section */
 .author-list {
     display: flex;
     justify-content: center;
-    gap: 40px;
+    gap: 20px;
     flex-wrap: wrap;
 }
 
 .author-card {
-    padding: 30px 50px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    font-size: 2rem;
-    transition: transform 0.3s;
+    background-color: var(--light-bg);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.author-card:hover {
-    transform: scale(1.1);
-}
-
-/* Contact */
+/* Contact Section */
 .contact-info {
-    font-size: 2rem;
-}
-
-.contact a {
-    color: #fff;
-    text-decoration: none;
-    border-bottom: 2px solid #fff;
-    transition: 0.3s;
-}
-
-.contact a:hover {
-    color: #aaa;
-    border-bottom: 2px solid #aaa;
-}
-
-
-/* Contact */
-.contact {
-    background: #222;
-    color: white;
-    flex-direction: column;
-}
-
-/* Stilizare secțiune contact */
-.contact {
-    position: relative;
-    height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    background: #000;
-    color: #fff;
-    overflow: hidden;
-    padding: 5vw;
+    gap: 10px;
 }
 
-/* Fundal cu parallax */
-.contact-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('https://source.unsplash.com/1600x900/?abstract,black') no-repeat center;
-    background-size: cover;
-    transform: translateY(0);
-    transition: transform 0.3s ease-out;
-    z-index: -1;
-}
-
-/* Stilizare conținut contact */
-.contact-content {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-/* Titlu Contact */
-.contact h2 {
-    font-size: 5rem;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    text-align: center;
-    padding-top: 20px;
-}
-
-/* Informațiile de contact pe pagină */
-.contact-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 50%;
-    font-size: 2rem;
-    text-align: center;
-}
-
-/* Linkuri stilizate */
-.contact a {
-    color: #fff;
+.contact-info a {
+    color: var(--accent-color);
     text-decoration: none;
-    border-bottom: 2px solid #fff;
-    transition: 0.3s;
+    transition: color 0.3s ease;
 }
 
-.contact a:hover {
-    color: #aaa;
-    border-bottom: 2px solid #aaa;
+.contact-info a:hover {
+    color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .slider {
+        flex-direction: column;
+    }
+
+    .btn-group {
+        flex-direction: column;
+    }
 }
