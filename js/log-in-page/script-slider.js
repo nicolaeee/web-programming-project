@@ -1,16 +1,24 @@
-document.addEventListener("DOMContentLoaded", function () {
-    let index = 0;
-    let slides = document.querySelectorAll(".slide");
-    let totalSlides = slides.length;
-    let sliderContainer = document.querySelector(".slider-container");
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
 
-    function moveSlide(step) {
-        index += step;
-        if (index >= totalSlides) index = 0;
-        if (index < 0) index = totalSlides - 1;
-        sliderContainer.style.transform = `translateX(-${index * 100}%)`;
+function moveSlide(direction) {
+    // Remove active class from current slide
+    slides[currentSlide].classList.remove('active');
+
+    // Update current slide index
+    currentSlide += direction;
+
+    // Handle wrapping around the slides
+    if (currentSlide >= slides.length) {
+        currentSlide = 0;
+    }
+    if (currentSlide < 0) {
+        currentSlide = slides.length - 1;
     }
 
-    document.querySelector(".prev").addEventListener("click", () => moveSlide(-1));
-    document.querySelector(".next").addEventListener("click", () => moveSlide(1));
-});
+    // Add active class to new current slide
+    slides[currentSlide].classList.add('active');
+}
+
+// Initialize first slide as active
+slides[currentSlide].classList.add('active');
