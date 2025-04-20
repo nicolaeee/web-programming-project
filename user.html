@@ -113,13 +113,12 @@
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <a href="#">Căutare produs</a>
-    <a href="#">Selectare gen</a>
+    <a href="#" id="select-gen-btn">Selectare gen</a>
     <a href="#">Filtrare preț</a>
     <a href="#">Verificare comandă</a>
     <a href="#">Istoric utilizare</a>
     <a href="#" id="cartButton">Cosul meu</a>
-    <a href="#">Logout</a>
+    <a href="file.html">Logout</a>
   </div>
 
   <!-- Main content -->
@@ -169,7 +168,27 @@
       <div class="book"><h3>Cartea 15</h3><p>Autor: Topârceanu</p><p>Preț: 41 RON</p></div>
     </div>
   </div>
-  <!-- <div id="booksContainer" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px;"></div> -->
+<!-- Modalul de selectare gen -->
+<div id="gen-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close-gen-modal">&times;</span>
+    <h3>Selectează genul</h3>
+    <select id="genre-select">
+      <option value="">-- Alege un gen --</option>
+      <option value="Drama">Drama</option>
+      <option value="Copii">Copii</option>
+      <option value="Istorie">Istorie</option>
+      <option value="Ficțiune">Ficțiune</option>
+      <option value="Știință">Știință</option>
+      <option value="Clasica">Clasica</option>
+    </select>
+    <br><br>
+    <button id="filter-button">Afișează cărți</button>
+  </div>
+</div>
+
+<!-- Zona unde se afișează cărțile filtrate -->
+<div class="filtered-books-container"></div>
 
 
   <script>
