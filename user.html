@@ -129,6 +129,14 @@
       </div>
     </div>
 
+    <!-- Modalul pentru afișarea cărții -->
+<div id="bookModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
     <div class="books-container">
       <!-- 15 books -->
       <div class="book"><h3>Cartea 1</h3><p>Autor: Popescu</p><p>Preț: 50 RON</p></div>
@@ -148,7 +156,7 @@
       <div class="book"><h3>Cartea 15</h3><p>Autor: Topârceanu</p><p>Preț: 41 RON</p></div>
     </div>
   </div>
-  <div id="booksContainer" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px;"></div>
+  <!-- <div id="booksContainer" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px;"></div> -->
 
 
   <script>
@@ -188,5 +196,47 @@
           });
   });
   </script>
+
+<script>
+  document.getElementById("searchInput").addEventListener("input", function () {
+      const keyword = this.value.trim();
+
+      if (keyword.length < 2) return; // Caută doar dacă sunt minim 2 caractere
+
+      fetch(`php/search_books.php?keyword=${encodeURIComponent(keyword)}`)
+          .then(response => response.json())
+          .then(data => {
+              if (data.length > 0) {
+                  const book = data[0]; // Afișăm doar prima carte găsită
+
+                  const content = `
+                      <h2>${book.titlu}</h2>
+                      <p><strong>Autor:</strong> ${book.autor}</p>
+                      <p><strong>Gen:</strong> ${book.gen}</p>
+                      <p><strong>Preț:</strong> ${book.pret} RON</p>
+                      <p><strong>An:</strong> ${book.an}</p>
+                      <p><strong>Stoc:</strong> ${book.stoc} buc.</p>
+                  `;
+
+                  document.getElementById("modalContent").innerHTML = content;
+                  document.getElementById("bookModal").style.display = "block";
+              }
+          });
+  });
+
+  // Închidere modal
+  document.querySelector(".close-modal").addEventListener("click", function () {
+      document.getElementById("bookModal").style.display = "none";
+  });
+
+  // Închidere dacă se face click în afara modalului
+  window.addEventListener("click", function (event) {
+      const modal = document.getElementById("bookModal");
+      if (event.target === modal) {
+          modal.style.display = "none";
+      }
+  });
+  </script>
+
 </body>
 </html>
