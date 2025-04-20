@@ -125,7 +125,7 @@
     <div class="header">
       <span class="burger" onclick="toggleSidebar()">☰</span>
       <div class="search-bar">
-        <input type="text" placeholder="Caută o carte...">
+        <input type="text" id="searchInput" placeholder="Caută o carte după titlu sau autor...">
       </div>
     </div>
 
@@ -148,6 +148,8 @@
       <div class="book"><h3>Cartea 15</h3><p>Autor: Topârceanu</p><p>Preț: 41 RON</p></div>
     </div>
   </div>
+  <div id="booksContainer" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 20px;"></div>
+
 
   <script>
     function toggleSidebar() {
@@ -161,6 +163,30 @@
         main.style.marginLeft = "250px";
       }
     }
+  </script>
+
+<script>
+  document.getElementById("searchInput").addEventListener("input", function () {
+      const keyword = this.value;
+
+      fetch(`php/search_books.php?keyword=${encodeURIComponent(keyword)}`)
+          .then(response => response.json())
+          .then(data => {
+              const container = document.getElementById("booksContainer");
+              container.innerHTML = "";
+
+              data.forEach(book => {
+                  const div = document.createElement("div");
+                  div.innerHTML = `
+                      <h3>${book.titlu}</h3>
+                      <p>Autor: ${book.autor}</p>
+                      <p>Gen: ${book.gen}</p>
+                      <p>Preț: ${book.pret} RON</p>
+                  `;
+                  container.appendChild(div);
+              });
+          });
+  });
   </script>
 </body>
 </html>
