@@ -22,28 +22,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Exemplu de autentificare (va trebui înlocuit cu logica reală de autentificare)
+    // Logica pentru autentificare administrator
     adminBtn.addEventListener("click", function () {
         let username = document.getElementById("username").value;
         let password = document.getElementById("password").value;
 
-        if (username && password) {
-            alert("Autentificare administrator: " + username);
-            // Adăugați logica de autentificare pentru administrator
+        if (username === "admin123" && password === "admin321") {
+            window.location.href = "admin.html";
         } else {
-            alert("Vă rugăm să introduceți username și parolă");
+            alert("Nume de utilizator sau parolă incorecte pentru administrator.");
         }
     });
 
+    // Logica pentru autentificare utilizator
     userBtn.addEventListener("click", function () {
         let username = document.getElementById("username").value;
         let password = document.getElementById("password").value;
 
-        if (username && password) {
-            alert("Autentificare utilizator: " + username);
-            // Adăugați logica de autentificare pentru utilizator
+        if (username === "user123" && password === "user321") {
+            window.location.href = "user.html";
         } else {
-            alert("Vă rugăm să introduceți username și parolă");
+            alert("Nume de utilizator sau parolă incorecte pentru utilizator.");
         }
     });
 });
