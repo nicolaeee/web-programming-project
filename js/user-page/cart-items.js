@@ -40,3 +40,7 @@ function addToCart(book) {
       document.getElementById("cartModal").style.display = "none";
     }
   });
+
+  function closeFilteredBooks() {
+    document.getElementById("filteredBooksContainer").style.display = "none";
+ }

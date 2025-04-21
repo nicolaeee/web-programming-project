@@ -1,98 +1,170 @@
 <!DOCTYPE html>
 <html lang="ro">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="modal-log-in/file.css">
-  <link rel="stylesheet" href="css/user-page/file.css">
-  <title>User - Librărie</title>
-</head>
-<body>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="modal-log-in/file.css">
+      <link rel="stylesheet" href="css/user-page/file.css">
+      <title>User - Librărie</title>
+   </head>
+   <body>
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+         <a href="#" id="openGenreModal">Selectare gen</a>
+         <a href="#" id="openPriceModal">Filtrare preț</a> <!-- Link pentru filtrarea după preț -->
+         <a href="#">Verificare comandă</a>
+         <a href="#">Istoric utilizare</a>
+         <a href="#" id="cartButton">Cosul meu</a>
+         <a href="file.html">Logout</a>
+      </div>
+      <!-- Modalul -->
+      <div id="genreModal" class="modal" style="display:none;">
+         <div class="modal-content">
+            <span class="close" id="closeGenreModal">&times;</span>
+            <h2>Selectează genul</h2>
+            <select id="genreSelect">
+               <option value="Drama">Drama</option>
+               <option value="Copii">Copii</option>
+               <option value="Istorie">Istorie</option>
+               <option value="Ficțiune">Ficțiune</option>
+               <option value="Știință">Știință</option>
+               <option value="Clasica">Clasica</option>
+            </select>
+            <button id="filterByGenre">Afișează cărțile</button>
+         </div>
+      </div>
+      <!-- Aici se vor afișa cărțile filtrate -->
+      <div class="filtered-books"></div>
 
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <a href="#" id="openGenreModal">Selectare gen</a>
-    <a href="#">Filtrare preț</a>
-    <a href="#">Verificare comandă</a>
-    <a href="#">Istoric utilizare</a>
-    <a href="#" id="cartButton">Cosul meu</a>
-    <a href="file.html">Logout</a>
-  </div>
+      <div id="filteredBooksContainer">
+        <button class="close-button" onclick="closeFilteredBooks()">X</button>
+        <div id="filteredBooksContent"></div> <!-- Acesta trebuie să fie prezent -->
+     </div>
 
-  <!-- Modalul -->
-<div id="genreModal" class="modal" style="display:none;">
-  <div class="modal-content">
-    <span class="close" id="closeGenreModal">&times;</span>
-    <h2>Selectează genul</h2>
-    <select id="genreSelect">
-      <option value="Drama">Drama</option>
-      <option value="Copii">Copii</option>
-      <option value="Istorie">Istorie</option>
-      <option value="Ficțiune">Ficțiune</option>
-      <option value="Știință">Știință</option>
-      <option value="Clasica">Clasica</option>
-    </select>
-    <button id="filterByGenre">Afișează cărțile</button>
-  </div>
-</div>
 
-<!-- Aici se vor afișa cărțile filtrate -->
-<div class="filtered-books"></div>
-  <!-- Main content -->
-  <div class="main" id="main">
-    <div class="header">
-      <span class="burger" onclick="toggleSidebar()">☰</span>
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Caută o carte după titlu sau autor...">
+    <!-- Modalul pentru filtrare preț -->
+    <div id="priceModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" id="closePriceModal">&times;</span>
+        <h2>Filtrare după preț</h2>
+        <label for="minPrice">Preț minim:</label>
+        <input type="number" id="minPrice" name="minPrice" placeholder="Minim"><br><br>
+        <label for="maxPrice">Preț maxim:</label>
+        <input type="number" id="maxPrice" name="maxPrice" placeholder="Maxim"><br><br>
+        <button id="filterByPrice">Aplică filtrul</button>
       </div>
     </div>
 
-    <!-- Modalul pentru afișarea cărții -->
-<div id="bookModal" class="modal">
-  <div class="modal-content">
-    <span class="close-modal">&times;</span>
-    <div id="modalContent"></div>
-  </div>
-</div>
-
-<!-- Modal pentru cosul de cumpărături -->
-<div id="cartModal" class="modal">
-  <div class="modal-content">
-    <span class="close-modal-cart">&times;</span>
-    <h2>Cosul meu</h2>
-    <div id="cartContent"></div>
-    <button id="checkoutButton">Finalizează comanda</button>
-  </div>
-</div>
-
-
-    <div class="books-container">
-      <!-- 15 books -->
-      <div class="book"><h3>Cartea 1</h3><p>Autor: Popescu</p><p>Preț: 50 RON</p></div>
-      <div class="book"><h3>Cartea 2</h3><p>Autor: Ionescu</p><p>Preț: 45 RON</p></div>
-      <div class="book"><h3>Cartea 3</h3><p>Autor: Enescu</p><p>Preț: 60 RON</p></div>
-      <div class="book"><h3>Cartea 4</h3><p>Autor: Preda</p><p>Preț: 38 RON</p></div>
-      <div class="book"><h3>Cartea 5</h3><p>Autor: Eliade</p><p>Preț: 42 RON</p></div>
-      <div class="book"><h3>Cartea 6</h3><p>Autor: Rebreanu</p><p>Preț: 55 RON</p></div>
-      <div class="book"><h3>Cartea 7</h3><p>Autor: Blaga</p><p>Preț: 48 RON</p></div>
-      <div class="book"><h3>Cartea 8</h3><p>Autor: Creangă</p><p>Preț: 33 RON</p></div>
-      <div class="book"><h3>Cartea 9</h3><p>Autor: Sadoveanu</p><p>Preț: 39 RON</p></div>
-      <div class="book"><h3>Cartea 10</h3><p>Autor: Arghezi</p><p>Preț: 51 RON</p></div>
-      <div class="book"><h3>Cartea 11</h3><p>Autor: Eminescu</p><p>Preț: 70 RON</p></div>
-      <div class="book"><h3>Cartea 12</h3><p>Autor: Slavici</p><p>Preț: 37 RON</p></div>
-      <div class="book"><h3>Cartea 13</h3><p>Autor: Bacovia</p><p>Preț: 43 RON</p></div>
-      <div class="book"><h3>Cartea 14</h3><p>Autor: Minulescu</p><p>Preț: 36 RON</p></div>
-      <div class="book"><h3>Cartea 15</h3><p>Autor: Topârceanu</p><p>Preț: 41 RON</p></div>
-    </div>
-  </div>
-
-<!-- Zona unde se afișează cărțile filtrate -->
-<div class="filtered-books-container"></div>
-
-<script src="js/user-page/modal-open.js"></script>
-<script src="js/user-page/side-bar.js"></script>
-<script src="js/user-page/add-to-cart.js"></script>
-<script src="js/user-page/cart-search-items.js"></script>
-<script src="js/user-page/cart-items.js"></script>
-</body>
+      <!-- Main content -->
+      <div class="main" id="main">
+         <div class="header">
+            <span class="burger" onclick="toggleSidebar()">☰</span>
+            <div class="search-bar">
+               <input type="text" id="searchInput" placeholder="Caută o carte după titlu sau autor...">
+            </div>
+         </div>
+         <!-- Modalul pentru afișarea cărții -->
+         <div id="bookModal" class="modal">
+            <div class="modal-content">
+               <span class="close-modal">&times;</span>
+               <div id="modalContent"></div>
+            </div>
+         </div>
+         <!-- Modal pentru cosul de cumpărături -->
+         <div id="cartModal" class="modal">
+            <div class="modal-content">
+               <span class="close-modal-cart">&times;</span>
+               <h2>Cosul meu</h2>
+               <div id="cartContent"></div>
+               <button id="checkoutButton">Finalizează comanda</button>
+            </div>
+         </div>
+         <div class="books-container">
+            <!-- 15 books -->
+            <div class="book">
+               <h3>Cartea 1</h3>
+               <p>Autor: Popescu</p>
+               <p>Preț: 50 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 2</h3>
+               <p>Autor: Ionescu</p>
+               <p>Preț: 45 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 3</h3>
+               <p>Autor: Enescu</p>
+               <p>Preț: 60 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 4</h3>
+               <p>Autor: Preda</p>
+               <p>Preț: 38 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 5</h3>
+               <p>Autor: Eliade</p>
+               <p>Preț: 42 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 6</h3>
+               <p>Autor: Rebreanu</p>
+               <p>Preț: 55 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 7</h3>
+               <p>Autor: Blaga</p>
+               <p>Preț: 48 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 8</h3>
+               <p>Autor: Creangă</p>
+               <p>Preț: 33 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 9</h3>
+               <p>Autor: Sadoveanu</p>
+               <p>Preț: 39 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 10</h3>
+               <p>Autor: Arghezi</p>
+               <p>Preț: 51 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 11</h3>
+               <p>Autor: Eminescu</p>
+               <p>Preț: 70 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 12</h3>
+               <p>Autor: Slavici</p>
+               <p>Preț: 37 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 13</h3>
+               <p>Autor: Bacovia</p>
+               <p>Preț: 43 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 14</h3>
+               <p>Autor: Minulescu</p>
+               <p>Preț: 36 RON</p>
+            </div>
+            <div class="book">
+               <h3>Cartea 15</h3>
+               <p>Autor: Topârceanu</p>
+               <p>Preț: 41 RON</p>
+            </div>
+         </div>
+      </div>
+      <!-- Zona unde se afișează cărțile filtrate -->
+      <div class="filtered-books-container"></div>
+      <script src="js/user-page/price-filter.js"></script>
+      <script src="js/user-page/modal-open.js"></script>
+      <script src="js/user-page/side-bar.js"></script>
+      <script src="js/user-page/add-to-cart.js"></script>
+      <script src="js/user-page/cart-search-items.js"></script>
+      <script src="js/user-page/cart-items.js"></script>
+   </body>
 </html>
