@@ -113,13 +113,77 @@
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <a href="#" id="select-gen-btn">Selectare gen</a>
+    <a href="#" id="openGenreModal">Selectare gen</a>
     <a href="#">Filtrare preț</a>
     <a href="#">Verificare comandă</a>
     <a href="#">Istoric utilizare</a>
     <a href="#" id="cartButton">Cosul meu</a>
     <a href="file.html">Logout</a>
   </div>
+
+  <!-- Modalul -->
+<div id="genreModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close" id="closeGenreModal">&times;</span>
+    <h2>Selectează genul</h2>
+    <select id="genreSelect">
+      <option value="Drama">Drama</option>
+      <option value="Copii">Copii</option>
+      <option value="Istorie">Istorie</option>
+      <option value="Ficțiune">Ficțiune</option>
+      <option value="Știință">Știință</option>
+      <option value="Clasica">Clasica</option>
+    </select>
+    <button id="filterByGenre">Afișează cărțile</button>
+  </div>
+</div>
+
+<!-- Aici se vor afișa cărțile filtrate -->
+<div class="filtered-books"></div>
+
+<script>
+
+  // Deschidere/închidere modal
+document.getElementById("openGenreModal").onclick = () => {
+  document.getElementById("genreModal").style.display = "block";
+};
+document.getElementById("closeGenreModal").onclick = () => {
+  document.getElementById("genreModal").style.display = "none";
+};
+
+// Afișează cărțile filtrate după gen
+document.getElementById("filterByGenre").onclick = async () => {
+  const gen = document.getElementById("genreSelect").value;
+
+  try {
+    const response = await fetch(`php/getBooksByGenre.php?gen=${encodeURIComponent(gen)}`);
+    const data = await response.json();
+
+    const container = document.querySelector(".filtered-books");
+    container.innerHTML = ""; // curățăm afișajul anterior
+
+    data.forEach(book => {
+      const bookDiv = document.createElement("div");
+      bookDiv.classList.add("book");
+      bookDiv.innerHTML = `
+        <h3>${book.titlu}</h3>
+        <p>Autor: ${book.autor}</p>
+        <p>Preț: ${book.pret} RON</p>
+        <button class="add-to-cart">Adaugă în coș</button>
+      `;
+      container.appendChild(bookDiv);
+    });
+
+    // Atașăm logica de coș la butoanele noi
+    addToCartListeners();
+
+    document.getElementById("genreModal").style.display = "none";
+  } catch (err) {
+    console.error("Eroare la preluarea cărților:", err);
+  }
+};
+
+</script>
 
   <!-- Main content -->
   <div class="main" id="main">
@@ -168,24 +232,6 @@
       <div class="book"><h3>Cartea 15</h3><p>Autor: Topârceanu</p><p>Preț: 41 RON</p></div>
     </div>
   </div>
-<!-- Modalul de selectare gen -->
-<div id="gen-modal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <span class="close-gen-modal">&times;</span>
-    <h3>Selectează genul</h3>
-    <select id="genre-select">
-      <option value="">-- Alege un gen --</option>
-      <option value="Drama">Drama</option>
-      <option value="Copii">Copii</option>
-      <option value="Istorie">Istorie</option>
-      <option value="Ficțiune">Ficțiune</option>
-      <option value="Știință">Știință</option>
-      <option value="Clasica">Clasica</option>
-    </select>
-    <br><br>
-    <button id="filter-button">Afișează cărți</button>
-  </div>
-</div>
 
 <!-- Zona unde se afișează cărțile filtrate -->
 <div class="filtered-books-container"></div>
@@ -272,107 +318,30 @@ window.addEventListener("click", function (event) {
   }
 });
 
-  </script>
+function addToCartListeners() {
+  document.querySelectorAll(".add-to-cart").forEach(button => {
+    button.onclick = (e) => {
+      const bookDiv = e.target.closest(".book");
+      const titlu = bookDiv.querySelector("h3").textContent;
+      const autor = bookDiv.querySelector("p:nth-of-type(1)").textContent.replace("Autor: ", "");
+      const pretText = bookDiv.querySelector("p:nth-of-type(2)").textContent;
+      const pret = parseFloat(pretText.replace("Preț: ", "").replace(" RON", ""));
 
-<script>
-
-  document.getElementById("searchInput").addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        const keyword = this.value.trim();
-
-        if (keyword.length < 2) return;
-
-        fetch(`php/search_books.php?keyword=${encodeURIComponent(keyword)}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.length > 0) {
-                    const book = data[0]; // Prima carte găsită
-
-                    const content = `
-                        <h2>${book.titlu}</h2>
-                        <p><strong>Autor:</strong> ${book.autor}</p>
-                        <p><strong>Gen:</strong> ${book.gen}</p>
-                        <p><strong>Preț:</strong> ${book.pret} RON</p>
-                        <button class="add-to-cart-btn" data-id="${book.id}" data-title="${book.titlu}" data-pret="${book.pret}">Adaugă în coș</button>
-                    `;
-
-                    document.getElementById("modalContent").innerHTML = content;
-                    document.getElementById("bookModal").style.display = "block";
-
-                    document.querySelector(".add-to-cart-btn").addEventListener("click", function () {
-  const id = this.dataset.id;
-  const titlu = this.dataset.title;
-  const pret = this.dataset.pret;
-
-  // Adaugă cartea în coș
-  addToCart({ id, titlu, pret });
-
-  // Afișează un mesaj și închide modalul
-  alert(`"${titlu}" a fost adăugată în coș.`);
-  document.getElementById("bookModal").style.display = "none";
-});
-
-                } else {
-                    alert("Nu am găsit nicio carte cu acel cuvânt cheie.");
-                }
-            });
-    }
-});
-
-// Închide modalul când se apasă pe "X"
-document.querySelector(".close-modal").addEventListener("click", function () {
-  document.getElementById("bookModal").style.display = "none";
-});
-
-
-  </script>
-
-  <script>
-    // Coșul de cumpărături
-let cart = [];
-
-// Adaugă cartea în coș
-function addToCart(book) {
-  cart.push(book);  // Adaugă cartea în array-ul cart
+      cart.push({ titlu, autor, pret });
+      console.log("Carte adăugată în coș:", titlu);
+    };
+  });
 }
 
-// Actualizează lista cărților din coș
-function updateCartModal() {
-  const cartContent = document.getElementById("cartContent");
-  cartContent.innerHTML = ""; // Curăță conținutul actual
 
-  if (cart.length === 0) {
-    cartContent.innerHTML = "<p>Coșul este gol.</p>";
-  } else {
-    cart.forEach(book => {
-      const div = document.createElement("div");
-      div.innerHTML = `
-        <p><strong>${book.titlu}</strong> - ${book.pret} RON</p>
-      `;
-      cartContent.appendChild(div);
-    });
-  }
-}
+// Apel inițial pt. cărțile deja afișate
+addToCartListeners();
 
-// Deschide modalul coșului
-document.getElementById("cartButton").addEventListener("click", function () {
-  updateCartModal();
-  document.getElementById("cartModal").style.display = "block";
-});
-
-// Închide modalul coșului
-document.querySelector(".close-modal-cart").addEventListener("click", function () {
-  document.getElementById("cartModal").style.display = "none";
-});
-
-// Închide modalul coșului dacă se face click în afara lui
-window.addEventListener("click", function (event) {
-  if (event.target === document.getElementById("cartModal")) {
-    document.getElementById("cartModal").style.display = "none";
-  }
-});
 
   </script>
 
+
+<script src="js/user-page/cart-search-items.js"></script>
+<script src="js/user-page/cart-items.js"></script>
 </body>
 </html>
