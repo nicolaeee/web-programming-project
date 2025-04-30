@@ -79,6 +79,23 @@ document.querySelectorAll(".add-to-cart").forEach(button => {
 });
 }
 
+document.getElementById("checkoutButton").addEventListener("click", () => {
+  const cart = getCart(); // Funcție din add-to-cart.js
+
+  fetch("php/finalize-order.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cart)
+  })
+  .then(res => res.text())
+  .then(msg => {
+      alert("Comanda a fost trimisă!");
+      clearCart(); // golește coșul
+  })
+  .catch(err => console.error("Eroare finalizare comandă:", err));
+});
+
+
 
 // Apel inițial pt. cărțile deja afișate
 addToCartListeners();
