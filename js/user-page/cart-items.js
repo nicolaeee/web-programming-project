@@ -44,3 +44,23 @@ function addToCart(book) {
   function closeFilteredBooks() {
     document.getElementById("filteredBooksContainer").style.display = "none";
  }
+
+ document.getElementById("checkoutButton").addEventListener("click", () => {
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+  fetch("php/save-order.php", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cartItems)
+  })
+  .then(res => res.json())
+  .then(data => {
+      console.log("Comandă salvată:", data);
+      alert("Comanda a fost trimisă către admin!");
+      localStorage.removeItem("cartItems");
+      location.href = "admin.html"; // dacă vrei redirect
+  })
+  .catch(err => console.error("Eroare salvare comandă:", err));
+});
