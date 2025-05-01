@@ -95,6 +95,18 @@ document.getElementById("checkoutButton").addEventListener("click", () => {
   .catch(err => console.error("Eroare finalizare comandă:", err));
 });
 
+// utils/history.js sau în orice fișier JS inclus
+function logUserAction(action) {
+  const history = JSON.parse(localStorage.getItem("userHistory")) || [];
+  const timestamp = new Date().toLocaleString();
+  history.push(`[${timestamp}] ${action}`);
+  localStorage.setItem("userHistory", JSON.stringify(history));
+}
+
+addToCartButton.addEventListener("click", () => {
+  // ... logica pentru adăugare în coș ...
+  logUserAction(`A adăugat în coș: ${bookTitle}`);
+});
 
 
 // Apel inițial pt. cărțile deja afișate

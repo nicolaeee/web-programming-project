@@ -200,3 +200,72 @@ body {
   cursor: pointer;
 }
 
+/* Stiluri pentru modalul de istoric */
+#historyModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+#historyModal .modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 700px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#historyModal h2 {
+  color: #333;
+  margin-top: 0;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+#historyModal .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#historyModal .close:hover,
+#historyModal .close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+#historyList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+#historyList li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+#historyList li:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+#historyList li:last-child {
+  border-bottom: none;
+}
+
+#historyList li:hover {
+  background-color: #f2f2f2;
+}

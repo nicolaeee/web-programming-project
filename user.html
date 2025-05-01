@@ -5,6 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="modal-log-in/file.css">
       <link rel="stylesheet" href="css/user-page/file.css">
+      <link rel="stylesheet" href="css/user-page/filteradvanced.css">
       <title>User - Librărie</title>
    </head>
    <body>
@@ -12,8 +13,9 @@
       <div class="sidebar" id="sidebar">
          <a href="#" id="openGenreModal">Selectare gen</a>
          <a href="#" id="openPriceModal">Filtrare preț</a> <!-- Link pentru filtrarea după preț -->
+         <a href="#" id="openAdvancedFilterModal">Filtrare avansată</a>
          <a href="#">Verificare comandă</a>
-         <a href="#">Istoric utilizare</a>
+         <a href="#" id="openHistory">Istoric utilizare</a>
          <a href="#" id="cartButton">Cosul meu</a>
          <a href="file.html">Logout</a>
       </div>
@@ -80,13 +82,87 @@
             </div>
          </div>
          <!-- Modal pentru istoric utilizare -->
-         <div id="historyModal" class="modal">
+         <div id="historyModal" class="modal" style="display:none;">
             <div class="modal-content">
-               <span class="close-modal-history">&times;</span>
-               <h2>Istoric utilizare</h2>
+               <span class="close" onclick="document.getElementById('historyModal').style.display='none'">&times;</span>
+               <h2>Istoric acțiuni utilizator</h2>
                <ul id="historyList"></ul>
             </div>
          </div>
+
+         <!-- Modalul pentru filtrare avansată -->
+<div id="advancedFilterModal" class="modal" style="display:none;">
+   <div class="modal-content">
+      <span class="close" id="closeAdvancedFilterModal">&times;</span>
+      <h2>Filtrare avansată</h2>
+
+      <!-- Filtru pentru stoc -->
+      <div class="filter-section">
+         <h3>Stoc</h3>
+         <label>
+            <input type="radio" name="stock" value="all" checked> Toate cărțile
+         </label>
+         <label>
+            <input type="radio" name="stock" value="in_stock"> Doar în stoc
+         </label>
+         <label>
+            <input type="radio" name="stock" value="out_of_stock"> Indisponibile
+         </label>
+      </div>
+
+      <!-- Filtru pentru preț -->
+      <div class="filter-section">
+         <h3>Preț</h3>
+         <label>
+            <input type="radio" name="priceSort" value="none" checked> Fără sortare
+         </label>
+         <label>
+            <input type="radio" name="priceSort" value="asc"> Crescător
+         </label>
+         <label>
+            <input type="radio" name="priceSort" value="desc"> Descrescător
+         </label>
+         <div class="price-range">
+            <label for="advMinPrice">Preț minim:</label>
+            <input type="number" id="advMinPrice" placeholder="Minim" min="0">
+
+            <label for="advMaxPrice">Preț maxim:</label>
+            <input type="number" id="advMaxPrice" placeholder="Maxim" min="0">
+         </div>
+      </div>
+
+      <!-- Filtru pentru gen -->
+      <div class="filter-section">
+         <h3>Gen</h3>
+         <select id="advGenreSelect">
+            <option value="">Toate genurile</option>
+            <option value="Drama">Drama</option>
+            <option value="Copii">Copii</option>
+            <option value="Istorie">Istorie</option>
+            <option value="Ficțiune">Ficțiune</option>
+            <option value="Știință">Știință</option>
+            <option value="Clasica">Clasica</option>
+         </select>
+      </div>
+
+      <!-- Filtru pentru autor -->
+      <div class="filter-section">
+         <h3>Autor</h3>
+         <input type="text" id="authorFilter" placeholder="Numele autorului...">
+      </div>
+
+      <!-- Filtru pentru titlu -->
+      <div class="filter-section">
+         <h3>Titlu</h3>
+         <input type="text" id="titleFilter" placeholder="Titlul cărții...">
+      </div>
+
+      <!-- Buton pentru aplicarea filtrelor -->
+      <button id="applyAdvancedFilter" class="filter-button">Aplică filtrele</button>
+      <button id="resetAdvancedFilter" class="reset-button">Resetează filtrele</button>
+   </div>
+</div>
+
          <div class="books-container">
             <!-- 15 books -->
             <div class="book">
@@ -174,5 +250,7 @@
       <script src="js/user-page/add-to-cart.js"></script>
       <script src="js/user-page/cart-search-items.js"></script>
       <script src="js/user-page/cart-items.js"></script>
+      <script src="js/user-page/user-history.js"></script>
+      <script src="js/user-page/user-history.js"></script>
    </body>
 </html>
