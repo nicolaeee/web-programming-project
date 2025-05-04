@@ -1,13 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin - Librărie Online</title>
+    <link rel="stylesheet" href="css/admin-page/admin.css">
 </head>
 <body>
-    <h1>Admin</h1>
-    <div id="ordersContainer"></div>
+    <header>
+        <h1>Panou de administrare</h1>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Comenzi</a></li>
+                <li><a href="#">Produse</a></li>
+                <li><a href="#">Utilizatori</a></li>
+                <li><a href="#">Rapoarte</a></li>
+                <li><a href="file.html">Deconectare</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="dashboard">
+            <h2>Statistici</h2>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Comenzi noi</h3>
+                    <p class="stat-value" id="newOrdersCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>În procesare</h3>
+                    <p class="stat-value" id="processingOrdersCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Finalizate</h3>
+                    <p class="stat-value" id="completedOrdersCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Valoare totală</h3>
+                    <p class="stat-value" id="totalOrdersValue">0 RON</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="orders-section">
+            <h2>Comenzi</h2>
+            <div id="ordersContainer">
+                <!-- Aici vor fi afișate comenzile -->
+                <p>Se încarcă comenzile...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Librărie Online - Panou de administrare</p>
+    </footer>
+
+    <!-- Script-uri -->
     <script src="js/admin/orders.js"></script>
+    <script src="js/admin/admin-dashboard.js"></script>
 </body>
 </html>

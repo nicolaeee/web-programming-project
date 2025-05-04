@@ -175,3 +175,147 @@
     color: #2196F3;
     font-weight: bold;
   }
+
+  /* Stiluri pentru coș și checkout */
+#cartSummary {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+  }
+
+  .cart-total {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: 15px;
+  }
+
+  .cart-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+
+  /* Stiluri pentru modalul de checkout */
+  #checkoutModal .modal-content {
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  #orderSummary {
+    margin-bottom: 20px;
+  }
+
+  #orderSummary table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #orderSummary th, #orderSummary td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  #orderSummary th {
+    background-color: #f2f2f2;
+  }
+
+  .total-section {
+    margin: 15px 0;
+    text-align: right;
+  }
+
+  .user-info {
+    margin: 20px 0;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .form-group textarea {
+    height: 80px;
+  }
+
+  .form-actions {
+    text-align: right;
+    margin-top: 20px;
+  }
+
+  .download-options {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+  }
+
+  .download-options button,
+  .form-actions button,
+  .confirmation-actions button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  .download-options button:hover,
+  .form-actions button:hover,
+  .confirmation-actions button:hover {
+    background-color: #45a049;
+  }
+
+  /* Modal confirmare comandă */
+  #orderConfirmationModal .modal-content {
+    text-align: center;
+  }
+
+  #orderNumber {
+    font-weight: bold;
+  }
+
+  .confirmation-actions {
+    margin-top: 25px;
+  }
+
+  #downloadPdf, #downloadPdfConfirmation {
+    background-color: #f44336;
+  }
+
+  #downloadXls, #downloadXlsConfirmation {
+    background-color: #2196F3;
+  }
+
+  #backToShop {
+    background-color: #555;
+  }
+
+  #downloadPdf:hover, #downloadPdfConfirmation:hover {
+    background-color: #d32f2f;
+  }
+
+  #downloadXls:hover, #downloadXlsConfirmation:hover {
+    background-color: #0b7dda;
+  }
+
+  #backToShop:hover {
+    background-color: #333;
+  }
