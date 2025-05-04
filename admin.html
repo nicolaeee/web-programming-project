@@ -4,60 +4,1122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Librărie Online</title>
-    <link rel="stylesheet" href="css/admin-page/admin.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--primary-color);
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .dashboard {
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            color: var(--dark-color);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .section-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .book-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .book-table th, .book-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .book-table th {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .book-table tr:hover {
+            background-color: #f5f7fa;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.25rem 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .search-box button {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-color);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Graphs and charts styles */
+        .chart-container {
+            margin-top: 2rem;
+            height: 300px;
+            position: relative;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 250px;
+            gap: 1rem;
+            padding-bottom: 30px;
+            border-bottom: 2px solid var(--dark-color);
+            position: relative;
+        }
+
+        .bar {
+            width: 40px;
+            background-color: var(--primary-color);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: height 0.5s ease;
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .chart-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .pie-chart {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--primary-color) 0% 20%,
+                var(--secondary-color) 20% 50%,
+                var(--accent-color) 50% 70%,
+                var(--success-color) 70% 90%,
+                var(--warning-color) 90% 100%
+            );
+            position: relative;
+            margin: 2rem auto;
+        }
+
+        .legends {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 2px;
+        }
+
+        .legend-text {
+            font-size: 0.9rem;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Panou de administrare</h1>
         <nav>
             <ul>
-                <li><a href="#" class="active">Comenzi</a></li>
-                <li><a href="#">Produse</a></li>
-                <li><a href="#">Utilizatori</a></li>
-                <li><a href="#">Rapoarte</a></li>
+                <li><a href="#" id="dashboardLink" class="active">Dashboard</a></li>
+                <li><a href="#" id="booksLink">Cărți</a></li>
+                <li><a href="#" id="usersLink">Utilizatori</a></li>
+                <li><a href="#" id="reportsLink">Rapoarte</a></li>
                 <li><a href="file.html">Deconectare</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section class="dashboard">
+        <!-- Dashboard Section -->
+        <section id="dashboardSection">
             <h2>Statistici</h2>
             <div class="stats-container">
                 <div class="stat-card">
-                    <h3>Comenzi noi</h3>
-                    <p class="stat-value" id="newOrdersCount">0</p>
+                    <h3>Total cărți</h3>
+                    <p class="stat-value" id="totalBooks">15</p>
                 </div>
                 <div class="stat-card">
-                    <h3>În procesare</h3>
-                    <p class="stat-value" id="processingOrdersCount">0</p>
+                    <h3>Total autori</h3>
+                    <p class="stat-value" id="totalAuthors">12</p>
                 </div>
                 <div class="stat-card">
-                    <h3>Finalizate</h3>
-                    <p class="stat-value" id="completedOrdersCount">0</p>
+                    <h3>Stoc disponibil</h3>
+                    <p class="stat-value" id="availableStock">743</p>
                 </div>
                 <div class="stat-card">
-                    <h3>Valoare totală</h3>
-                    <p class="stat-value" id="totalOrdersValue">0 RON</p>
+                    <h3>Genuri de cărți</h3>
+                    <p class="stat-value" id="genreCount">6</p>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <h2>Ultimele cărți adăugate</h2>
+                <div class="recent-books">
+                    <table class="book-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Titlu</th>
+                                <th>Autor</th>
+                                <th>An</th>
+                                <th>Gen</th>
+                                <th>Stoc</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentBooksTable">
+                            <tr>
+                                <td>16</td>
+                                <td>Orașul</td>
+                                <td>Nicolas</td>
+                                <td>2025</td>
+                                <td>Clasica</td>
+                                <td>117</td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>Vieţile secrete ale planetelor</td>
+                                <td>Paul Murdin</td>
+                                <td>2022</td>
+                                <td>Știință</td>
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>Rătăciți printre formule</td>
+                                <td>Sabine Hossenfelder</td>
+                                <td>2020</td>
+                                <td>Știință</td>
+                                <td>44</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
 
-        <section class="orders-section">
-            <h2>Comenzi</h2>
-            <div id="ordersContainer">
-                <!-- Aici vor fi afișate comenzile -->
-                <p>Se încarcă comenzile...</p>
+        <!-- Books Management Section -->
+        <section id="booksSection" class="hidden">
+            <h2>Gestionare Cărți</h2>
+            <div class="section-container">
+                <div class="action-bar">
+                    <button id="addBookBtn" class="btn btn-primary">Adaugă Carte Nouă</button>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Caută după titlu, autor sau id...">
+                        <button id="searchBtn" class="btn">Caută</button>
+                    </div>
+                </div>
+
+                <table class="book-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Titlu</th>
+                            <th>Autor</th>
+                            <th>An</th>
+                            <th>Preț</th>
+                            <th>Gen</th>
+                            <th>Stoc</th>
+                            <th>Acțiuni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="booksTable">
+                        <tr>
+                            <td>4</td>
+                            <td>Luceafăr</td>
+                            <td>Mihai Eminescu</td>
+                            <td>1892</td>
+                            <td>100</td>
+                            <td>Drama</td>
+                            <td>17</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-primary edit-book" data-id="4">Editează</button>
+                                <button class="btn btn-danger delete-book" data-id="4">Șterge</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Amintiri din copilarie</td>
+                            <td>Ion Creanga</td>
+                            <td>2002</td>
+                            <td>100</td>
+                            <td>Copii</td>
+                            <td>24</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-primary edit-book" data-id="5">Editează</button>
+                                <button class="btn btn-danger delete-book" data-id="5">Șterge</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>O scurtă istorie ilustrată a românilor</td>
+                            <td>Neagu Djuvara</td>
+                            <td>2011</td>
+                            <td>49</td>
+                            <td>Istorie</td>
+                            <td>45</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-primary edit-book" data-id="6">Editează</button>
+                                <button class="btn btn-danger delete-book" data-id="6">Șterge</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="pagination">
+                    <!-- Pagination will be added here dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Users Section -->
+        <section id="usersSection" class="hidden">
+            <h2>Gestionare Utilizatori</h2>
+            <div class="section-container">
+                <p>Secțiunea de gestionare a utilizatorilor va fi implementată în viitoarele actualizări.</p>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reportsSection" class="hidden">
+            <h2>Rapoarte</h2>
+            <div class="section-container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="stockReport">Raport Stoc</div>
+                    <div class="tab" data-tab="genreReport">Raport Genuri</div>
+                    <div class="tab" data-tab="yearReport">Raport Ani Publicare</div>
+                </div>
+
+                <div id="stockReport" class="report-tab">
+                    <h3 class="chart-title">Top 5 Cărți după Stoc Disponibil</h3>
+                    <div class="chart-container">
+                        <div class="bar-chart">
+                            <div class="bar" style="height: 90%">
+                                <div class="bar-value">117</div>
+                                <div class="bar-label">Orașul</div>
+                            </div>
+                            <div class="bar" style="height: 85%">
+                                <div class="bar-value">110</div>
+                                <div class="bar-label">Gena egoistă</div>
+                            </div>
+                            <div class="bar" style="height: 85%">
+                                <div class="bar-value">110</div>
+                                <div class="bar-label">Din cer au căzut trei mere</div>
+                            </div>
+                            <div class="bar" style="height: 80%">
+                                <div class="bar-value">94</div>
+                                <div class="bar-label">Vieţile secrete ale planetelor</div>
+                            </div>
+                            <div class="bar" style="height: 72%">
+                                <div class="bar-value">93</div>
+                                <div class="bar-label">Cele mai frumoase Istorii</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="genreReport" class="report-tab hidden">
+                    <h3 class="chart-title">Distribuția Cărților pe Genuri</h3>
+                    <div class="pie-chart"></div>
+                    <div class="legends">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--primary-color)"></div>
+                            <div class="legend-text">Drama (42%)</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--secondary-color)"></div>
+                            <div class="legend-text">Istorie (16%)</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--accent-color)"></div>
+                            <div class="legend-text">Ficțiune (20%)</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--success-color)"></div>
+                            <div class="legend-text">Știință (16%)</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--warning-color)"></div>
+                            <div class="legend-text">Copii (6%)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="yearReport" class="report-tab hidden">
+                    <h3 class="chart-title">Cărți după Anul Publicării</h3>
+                    <div class="charts-grid">
+                        <div class="chart-container">
+                            <div class="bar-chart">
+                                <div class="bar" style="height: 20%">
+                                    <div class="bar-value">1</div>
+                                    <div class="bar-label">Pre-1900</div>
+                                </div>
+                                <div class="bar" style="height: 40%">
+                                    <div class="bar-value">2</div>
+                                    <div class="bar-label">1900-1950</div>
+                                </div>
+                                <div class="bar" style="height: 60%">
+                                    <div class="bar-value">3</div>
+                                    <div class="bar-label">1950-2000</div>
+                                </div>
+                                <div class="bar" style="height: 80%">
+                                    <div class="bar-value">4</div>
+                                    <div class="bar-label">2000-2020</div>
+                                </div>
+                                <div class="bar" style="height: 40%">
+                                    <div class="bar-value">2</div>
+                                    <div class="bar-label">După 2020</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
+
+    <!-- Modals -->
+    <div id="addBookModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Adaugă Carte Nouă</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="addBookForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="bookTitle">Titlu</label>
+                        <input type="text" id="bookTitle" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor">Autor</label>
+                        <input type="text" id="bookAuthor" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookYear">An publicare</label>
+                        <input type="number" id="bookYear" class="form-control" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="bookPrice">Preț</label>
+                        <input type="number" id="bookPrice" class="form-control" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bookGenre">Gen</label>
+                        <select id="bookGenre" class="form-control" required>
+                            <option value="">Selectează gen</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Istorie">Istorie</option>
+                            <option value="Fictiune">Ficțiune</option>
+                            <option value="Stiinta">Știință</option>
+                            <option value="Copii">Copii</option>
+                            <option value="Clasica">Clasica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookStock">Stoc</label>
+                        <input type="number" id="bookStock" class="form-control" required min="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Salvează Carte</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="editBookModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Editează Carte</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="editBookForm">
+                <input type="hidden" id="editBookId">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="editBookTitle">Titlu</label>
+                        <input type="text" id="editBookTitle" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editBookAuthor">Autor</label>
+                        <input type="text" id="editBookAuthor" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editBookYear">An publicare</label>
+                        <input type="number" id="editBookYear" class="form-control" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBookPrice">Preț</label>
+                        <input type="number" id="editBookPrice" class="form-control" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBookGenre">Gen</label>
+                        <select id="editBookGenre" class="form-control" required>
+                            <option value="">Selectează gen</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Istorie">Istorie</option>
+                            <option value="Fictiune">Ficțiune</option>
+                            <option value="Stiinta">Știință</option>
+                            <option value="Copii">Copii</option>
+                            <option value="Clasica">Clasica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editBookStock">Stoc</label>
+                        <input type="number" id="editBookStock" class="form-control" required min="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Actualizează Carte</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="deleteBookModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirmare Ștergere</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <p>Ești sigur că dorești să ștergi această carte? Această acțiune nu poate fi anulată.</p>
+            <div class="form-group" style="text-align: right; margin-top: 1rem;">
+                <button class="btn btn-danger" id="confirmDeleteBtn">Șterge</button>
+                <button class="btn" id="cancelDeleteBtn">Anulează</button>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2025 Librărie Online - Panou de administrare</p>
     </footer>
 
-    <!-- Script-uri -->
-    <script src="js/admin/orders.js"></script>
-    <script src="js/admin/admin-dashboard.js"></script>
+    <script>
+        // Sample data for demonstration
+        const books = [
+            { id: 4, titlu: "Luceafăr", autor: "Mihai Eminescu", an: 1892, pret: 100, gen: "Drama", stoc: 17 },
+            { id: 5, titlu: "Amintiri din copilarie", autor: "Ion Creanga", an: 2002, pret: 100, gen: "Copii", stoc: 24 },
+            { id: 6, titlu: "O scurtă istorie ilustrată a românilor", autor: "Neagu Djuvara", an: 2011, pret: 49, gen: "Istorie", stoc: 45 },
+            { id: 7, titlu: "Tratat de istorie a religiilor", autor: "Mircea Eliade", an: 1949, pret: 79, gen: "Istorie", stoc: 44 },
+            { id: 8, titlu: "Din cer au căzut trei mere", autor: "Narine Abgarian", an: 2003, pret: 110, gen: "Fictiune", stoc: 94 },
+            { id: 9, titlu: "Băiatul cu pijamale în dungi", autor: "John Boyne", an: 2007, pret: 29, gen: "Fictiune", stoc: 46 },
+            { id: 10, titlu: "Lumea Sofiei", autor: "Jostein Gaarder", an: 1989, pret: 39, gen: "Fictiune", stoc: 87 },
+            { id: 11, titlu: "Cele mai frumoase Istorii", autor: "Herodot", an: 521, pret: 120, gen: "Istorie", stoc: 93 },
+            { id: 12, titlu: "Rătăciți printre formule", autor: "Sabine Hossenfelder", an: 2020, pret: 89, gen: "Stiinta", stoc: 44 },
+            { id: 13, titlu: "Vieţile secrete ale planetelor", autor: "Paul Murdin", an: 2022, pret: 110, gen: "Stiinta", stoc: 94 },
+            { id: 14, titlu: "Gena egoistă", autor: "Richard Dawkins", an: 1976, pret: 25, gen: "Stiinta", stoc: 110 },
+            { id: 16, titlu: "Orașul", autor: "Nicolas", an: 2025, pret: 20, gen: "Clasica", stoc: 117 },
+            { id: 17, titlu: "Ion", autor: "Liviu Rebreanu", an: 1920, pret: 50, gen: "Drama", stoc: 38 },
+            { id: 18, titlu: "Enigma Otiliei", autor: "George Călinescu", an: 1938, pret: 42, gen: "Drama", stoc: 29 },
+            { id: 19, titlu: "Pădurea spânzuraților", autor: "Liviu Rebreanu", an: 1922, pret: 55, gen: "Drama", stoc: 35 },
+            { id: 20, titlu: "Moromeții", autor: "Marin Preda", an: 1955, pret: 58, gen: "Drama", stoc: 33 },
+            { id: 21, titlu: "Mara", autor: "Ioan Slavici", an: 1894, pret: 46, gen: "Drama", stoc: 28 },
+        ];
+
+        // DOM Elements
+        const dashboardSection = document.getElementById('dashboardSection');
+        const booksSection = document.getElementById('booksSection');
+        const usersSection = document.getElementById('usersSection');
+        const reportsSection = document.getElementById('reportsSection');
+
+        const dashboardLink = document.getElementById('dashboardLink');
+        const booksLink = document.getElementById('booksLink');
+        const usersLink = document.getElementById('usersLink');
+        const reportsLink = document.getElementById('reportsLink');
+
+        const addBookBtn = document.getElementById('addBookBtn');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+
+        const addBookModal = document.getElementById('addBookModal');
+        const editBookModal = document.getElementById('editBookModal');
+        const deleteBookModal = document.getElementById('deleteBookModal');
+
+        const addBookForm = document.getElementById('addBookForm');
+        const editBookForm = document.getElementById('editBookForm');
+
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+
+        const booksTable = document.getElementById('booksTable');
+        const totalBooks = document.getElementById('totalBooks');
+        const totalAuthors = document.getElementById('totalAuthors');
+        const availableStock = document.getElementById('availableStock');
+        const genreCount = document.getElementById('genreCount');
+
+        const tabs = document.querySelectorAll('.tab');
+        const reportTabs = document.querySelectorAll('.report-tab');
+
+        // Navigation Functions
+        function showSection(section) {
+            dashboardSection.classList.add('hidden');
+            booksSection.classList.add('hidden');
+            usersSection.classList.add('hidden');
+            reportsSection.classList.add('hidden');
+
+            dashboardLink.classList.remove('active');
+            booksLink.classList.remove('active');
+            usersLink.classList.remove('active');
+            reportsLink.classList.remove('active');
+
+            section.classList.remove('hidden');
+
+            if (section === dashboardSection) {
+                dashboardLink.classList.add('active');
+            } else if (section === booksSection) {
+                booksLink.classList.add('active');
+                loadBooks();
+            } else if (section === usersSection) {
+                usersLink.classList.add('active');
+            } else if (section === reportsSection) {
+                reportsLink.classList.add('active');
+            }
+        }
+
+        // Event Listeners for Navigation
+        dashboardLink.addEventListener('click', () => showSection(dashboardSection));
+        booksLink.addEventListener('click', () => showSection(booksSection));
+        usersLink.addEventListener('click', () => showSection(usersSection));
+        reportsLink.addEventListener('click', () => showSection(reportsSection));
+
+        // Modal Functions
+        function openModal(modal) {
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(modal) {
+            modal.style.display = 'none';
+        }
+
+        // Close modals when clicking the close button
+        document.querySelectorAll('.close-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                closeModal(btn.closest('.modal'));
+            });
+        });
+
+        // Close modals when clicking outside the modal content
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                closeModal(e.target);
+            }
+        });
+
+        // Book Management Functions
+        function loadBooks(searchQuery = '') {
+            booksTable.innerHTML = '';
+
+            let filteredBooks = books;
+
+            if (searchQuery) {
+                searchQuery = searchQuery.toLowerCase();
+                filteredBooks = books.filter(book =>
+                    book.id.toString().includes(searchQuery) ||
+                    book.titlu.toLowerCase().includes(searchQuery) ||
+                    book.autor.toLowerCase().includes(searchQuery) ||
+                    book.gen.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            filteredBooks.forEach(book => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${book.id}</td>
+                    <td>${book.titlu}</td>
+                    <td>${book.autor}</td>
+                    <td>${book.an}</td>
+                    <td>${book.pret}</td>
+                    <td>${book.gen}</td>
+                    <td>${book.stoc}</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-primary edit-book" data-id="${book.id}">Editează</button>
+                        <button class="btn btn-danger delete-book" data-id="${book.id}">Șterge</button>
+                    </td>
+                `;
+                booksTable.appendChild(row);
+            });
+
+            // Add event listeners to edit and delete buttons
+            document.querySelectorAll('.edit-book').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const bookId = parseInt(btn.getAttribute('data-id'));
+                    editBook(bookId);
+                });
+            });
+
+            document.querySelectorAll('.delete-book').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const bookId = parseInt(btn.getAttribute('data-id'));
+                    openDeleteConfirmation(bookId);
+                });
+            });
+        }
+
+        function editBook(bookId) {
+            const book = books.find(b => b.id === bookId);
+            if (!book) return;
+
+            document.getElementById('editBookId').value = book.id;
+            document.getElementById('editBookTitle').value = book.titlu;
+            document.getElementById('editBookAuthor').value = book.autor;
+            document.getElementById('editBookYear').value = book.an;
+            document.getElementById('editBookPrice').value = book.pret;
+            document.getElementById('editBookGenre').value = book.gen;
+            document.getElementById('editBookStock').value = book.stoc;
+
+            openModal(editBookModal);
+        }
+
+        function openDeleteConfirmation(bookId) {
+            confirmDeleteBtn.setAttribute('data-id', bookId);
+            openModal(deleteBookModal);
+        }
+
+        function deleteBook(bookId) {
+            const index = books.findIndex(b => b.id === bookId);
+            if (index !== -1) {
+                books.splice(index, 1);
+                loadBooks();
+                updateDashboardStats();
+            }
+            closeModal(deleteBookModal);
+        }
+
+        function addBook(bookData) {
+            // Generate a new ID (normally this would be handled by the database)
+            const newId = Math.max(...books.map(b => b.id)) + 1;
+
+            const newBook = {
+                id: newId,
+                titlu: bookData.titlu,
+                autor: bookData.autor,
+                an: bookData.an,
+                pret: bookData.pret,
+                gen: bookData.gen,
+                stoc: bookData.stoc
+            };
+
+            books.push(newBook);
+            loadBooks();
+            updateDashboardStats();
+            updateRecentBooks();
+        }
+
+        function updateBook(bookData) {
+            const index = books.findIndex(b => b.id === parseInt(bookData.id));
+            if (index !== -1) {
+                books[index] = {
+                    ...books[index],
+                    titlu: bookData.titlu,
+                    autor: bookData.autor,
+                    an: bookData.an,
+                    pret: bookData.pret,
+                    gen: bookData.gen,
+                    stoc: bookData.stoc
+                };
+
+                loadBooks();
+                updateDashboardStats();
+                updateRecentBooks();
+            }
+        }
+
+        // Dashboard Functions
+        function updateDashboardStats() {
+            totalBooks.textContent = books.length;
+
+            // Count unique authors
+            const authors = new Set(books.map(book => book.autor));
+            totalAuthors.textContent = authors.size;
+
+            // Calculate total stock
+            const stock = books.reduce((sum, book) => sum + book.stoc, 0);
+            availableStock.textContent = stock;
+
+            // Count unique genres
+            const genres = new Set(books.map(book => book.gen));
+            genreCount.textContent = genres.size;
+        }
+
+        function updateRecentBooks() {
+            const recentBooksTable = document.getElementById('recentBooksTable');
+            recentBooksTable.innerHTML = '';
+
+            // Sort books by ID (assuming higher ID = more recent) and take top 3
+            const recentBooks = [...books]
+                .sort((a, b) => b.id - a.id)
+                .slice(0, 3);
+
+            recentBooks.forEach(book => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${book.id}</td>
+                    <td>${book.titlu}</td>
+                    <td>${book.autor}</td>
+                    <td>${book.an}</td>
+                    <td>${book.gen}</td>
+                    <td>${book.stoc}</td>
+                `;
+                recentBooksTable.appendChild(row);
+            });
+        }
+
+        // Event Listeners for Book Management
+        addBookBtn.addEventListener('click', () => {
+            // Reset form
+            addBookForm.reset();
+            openModal(addBookModal);
+        });
+
+        addBookForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const newBook = {
+                titlu: document.getElementById('bookTitle').value,
+                autor: document.getElementById('bookAuthor').value,
+                an: parseInt(document.getElementById('bookYear').value),
+                pret: parseInt(document.getElementById('bookPrice').value),
+                gen: document.getElementById('bookGenre').value,
+                stoc: parseInt(document.getElementById('bookStock').value)
+            };
+
+            addBook(newBook);
+            closeModal(addBookModal);
+        });
+
+        editBookForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const updatedBook = {
+                id: document.getElementById('editBookId').value,
+                titlu: document.getElementById('editBookTitle').value,
+                autor: document.getElementById('editBookAuthor').value,
+                an: parseInt(document.getElementById('editBookYear').value),
+                pret: parseInt(document.getElementById('editBookPrice').value),
+                gen: document.getElementById('editBookGenre').value,
+                stoc: parseInt(document.getElementById('editBookStock').value)
+            };
+
+            updateBook(updatedBook);
+            closeModal(editBookModal);
+        });
+
+        confirmDeleteBtn.addEventListener('click', () => {
+            const bookId = parseInt(confirmDeleteBtn.getAttribute('data-id'));
+            deleteBook(bookId);
+        });
+
+        cancelDeleteBtn.addEventListener('click', () => {
+            closeModal(deleteBookModal);
+        });
+
+        searchBtn.addEventListener('click', () => {
+            loadBooks(searchInput.value);
+        });
+
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                loadBooks(searchInput.value);
+            }
+        });
+
+        // Report Tab Switching
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                reportTabs.forEach(t => t.classList.add('hidden'));
+                document.getElementById(tab.getAttribute('data-tab')).classList.remove('hidden');
+            });
+        });
+
+        // Initialize the app
+        updateDashboardStats();
+        updateRecentBooks();
+    </script>
 </body>
 </html>
