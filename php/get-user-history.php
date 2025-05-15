@@ -8,8 +8,8 @@ header('Access-Control-Allow-Methods: GET');
 
 // Conectare la baza de date
 $servername = "127.0.0.1"; // IP-ul serverului din captură
-$username = "root"; // Utilizator implicit (de înlocuit cu utilizatorul real)
-$password = ""; // Parola (de înlocuit cu parola reală)
+$username = "root"; // Utilizator implicit
+$password = ""; // Parola
 $dbname = "librarie"; // Numele bazei de date din captură
 
 try {
@@ -28,7 +28,8 @@ try {
     // Returnează datele ca JSON
     echo json_encode($result);
 } catch(PDOException $e) {
-    // Returnează eroarea
+    // Returnează eroarea ca JSON valid
+    http_response_code(500);
     echo json_encode([
         'status' => 'error',
         'message' => 'Eroare la conectare: ' . $e->getMessage()
